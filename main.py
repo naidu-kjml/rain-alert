@@ -15,4 +15,17 @@ weather_params = {
 response = requests.get(OWM_ENDPOINT, params=weather_params)
 response.raise_for_status()
 data = response.json()
-print(data)
+half_day_data = data["hourly"][:12]
+
+will_rain = False
+
+for hour_data in half_day_data:
+    condition = hour_data["weather"][0]["id"]
+    if int(condition) < 700:
+        will_rain = True
+
+if will_rain:
+    print("Bring an umbrella")
+
+# data["hourly"[0]["weather"][0]["id"]]
+# print(data)
